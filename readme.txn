@@ -8,7 +8,8 @@
 # none so far
 
 # get the source code
-wget https://developer.download.nvidia.com/embedded/L4T/r32-3-1_Release_v1.0/Sources/T210/public_sources.tbz2
+cd /compile/source/linux-jetson-tx
+wget https://developer.download.nvidia.com/embedded/L4T/r32_Release_v4.4/r32_Release_v4.4-GMC3/Sources/T210/public_sources.tbz2
 tar xjf public_sources.tbz2
 
 cp /compile/doc/jetson-tx/config.txn /compile/source/linux-jetson-tx/kernel/kernel-4.9/.config
