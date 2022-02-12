@@ -1,0 +1,20 @@
+--- drivers/net/wireless/bcmdhd_pcie/Makefile.org	2022-02-12 04:50:23.471584267 +0000
++++ drivers/net/wireless/bcmdhd_pcie/Makefile	2022-02-12 04:55:04.210774971 +0000
+@@ -11,7 +11,7 @@
+ 	-DDHD_DONOT_FORWARD_BCMEVENT_AS_NETWORK_PKT                           \
+ 	-DCUSTOMER_HW2 -DGET_CUSTOM_MAC_ENABLE -DSI_ERROR_ENFORCE             \
+ 	-DSEC_ENHANCEMENT -DDHD_VERSION_NO_DATE_TIME                          \
+-	-DENABLE_INSMOD_NO_FW_LOAD -DCONFIG_DTS -DGET_CUSTOM_MAC_ENABLE
++	-DENABLE_INSMOD_NO_FW_LOAD -DCONFIG_DTS -DGET_CUSTOM_MAC_ENABLE -Wno-error
+ 
+ #################
+ # Common feature
+--- drivers/net/wireless/realtek/rtl8812au/Makefile.org	2022-02-12 05:01:06.611405213 +0000
++++ drivers/net/wireless/realtek/rtl8812au/Makefile	2022-02-12 05:01:32.770584564 +0000
+@@ -1,5 +1,6 @@
+ EXTRA_CFLAGS += $(USER_EXTRA_CFLAGS)
+ EXTRA_CFLAGS += -O1
++EXTRA_CFLAGS += -Wno-error
+ #EXTRA_CFLAGS += -O3
+ #EXTRA_CFLAGS += -Wall
+ #EXTRA_CFLAGS += -Wextra

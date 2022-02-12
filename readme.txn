@@ -2,27 +2,39 @@
 # - /compile/doc/jetson-tx - the files in this dir
 # - /compile/source/linux-jetson-tx - the kernel sources checked out from gitrepo
 # - /compile/result/jetson-tx - the resulting kernel, modules etc. tar.gz files
+# - /compile/doc/kernel-config-options - https://github.com/hexdump0815/kernel-config-options
 # name: bsp-txn
 
-# patches:
-# none so far
+# info:
+# to get this kernel compiled it is recommended to use the gcc 7 compiler from
+# the ubuntu bionic buildenv - see: https://github.com/hexdump0815/buildenvs.git
+# first build the buildenv with docker-buildenv-bionic.sh
+# then run it with buildenv-bionic.sh
+# run thw following command inside of it
+apt-get -y install bc bison flex gettext initramfs-tools kmod libpci-dev
+# then do the kernel build inside of it
 
 # get the source code
+mkdir -p /compile/source/linux-jetson-tx
 cd /compile/source/linux-jetson-tx
-wget https://developer.download.nvidia.com/embedded/L4T/r32_Release_v4.4/r32_Release_v4.4-GMC3/Sources/T210/public_sources.tbz2
+# via: https://developer.nvidia.com/embedded/linux-tegra-r3261
+# via: https://developer.nvidia.com/embedded/linux-tegra-archive
+wget https://developer.nvidia.com/embedded/l4t/r32_release_v6.1/sources/t210/public_sources.tbz2
 tar xjf public_sources.tbz2
+tar xjf Linux_for_Tegra/source/public/kernel_src.tbz2
 
 # patches:
+cd /compile/source/linux-jetson-tx/kernel/nvidia
+# make all of the drivers compile
+patch -p0 < /compile/doc/jetson-tx/misc.txn/patches/make-all-drivers-compile.patch
+cd /compile/source/linux-jetson-tx/kernel/kernel-4.9
 # allow overclocking the cpu to 2ghz
 patch -p0 < /compile/doc/jetson-tx/misc.txn/patches/overclocking.patch
 
-cp /compile/doc/jetson-tx/config.txn /compile/source/linux-jetson-tx/kernel/kernel-4.9/.config
-cd /compile/source/linux-jetson-tx/kernel/kernel-4.9
-
 export ARCH=arm64
-# make tegra_defconfig
-# /compile/doc/jetson-tx/misc.txn/options/enable-docker-options.sh
-# /compile/doc/jetson-tx/misc.txn/options/enable-additional-options.sh
+scripts/kconfig/merge_config.sh -m arch/arm64/configs/tegra_defconfig /compile/doc/kernel-config-options/docker-options.cfg /compile/doc/kernel-config-options/options-to-remove-generic.cfg /compile/doc/jetson-tx/misc.txn/options/options-to-remove-special.cfg /compile/doc/kernel-config-options/additional-options-generic.cfg /compile/doc/kernel-config-options/additional-options-aarch64.cfg /compile/doc/jetson-tx/misc.txn/options/additional-options-special.cfg
+( cd /compile/doc/kernel-config-options ; git rev-parse --verify HEAD ) > /compile/doc/jetson-tx/misc.txn/options/kernel-config-options.version
+make olddefconfig
 make -j 4
 make -j 4 modules
 cd tools/perf

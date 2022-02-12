@@ -1,5 +1,5 @@
---- kernel/kernel-4.9/drivers/soc/tegra/tegra210-dvfs.c.org	2020-12-22 19:17:15.591467547 +0100
-+++ kernel/kernel-4.9/drivers/soc/tegra/tegra210-dvfs.c	2020-12-22 19:18:49.290672858 +0100
+--- drivers/soc/tegra/tegra210-dvfs.c.org	2020-12-22 19:17:15.591467547 +0100
++++ drivers/soc/tegra/tegra210-dvfs.c	2020-12-22 19:18:49.290672858 +0100
 @@ -331,6 +331,10 @@
  		{1479000000UL,	{  2519460,  -105063,     1611 } }, \
  		{1555500000UL,	{  2639809,  -108729,     1626 } }, \
@@ -39,8 +39,8 @@
  
  		if (match_dvfs_one("gpu cvb", d->speedo_id, d->process_id,
  				   gpu_speedo_id, gpu_process_id)) {
---- kernel/kernel-4.9/drivers/clk/tegra/clk-tegra124-dfll-fcpu.c.org	2020-12-22 19:17:08.951238896 +0100
-+++ kernel/kernel-4.9/drivers/clk/tegra/clk-tegra124-dfll-fcpu.c	2020-12-22 19:18:50.134701563 +0100
+--- drivers/clk/tegra/clk-tegra124-dfll-fcpu.c.org	2020-12-22 19:17:08.951238896 +0100
++++ drivers/clk/tegra/clk-tegra124-dfll-fcpu.c	2020-12-22 19:18:50.134701563 +0100
 @@ -105,7 +105,7 @@
  	[6] = 2014500000UL,
  	[7] = 1734000000UL,
